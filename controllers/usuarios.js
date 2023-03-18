@@ -74,6 +74,7 @@ const crearUsuario = (req, res=response) => {
 const deleteUsuario = (req ,res=response)=>{
 
     const { id } = req.params;
+
     conexion.query(`UPDATE usuario set  estatus='0' where idusuario=${id}`, (error, rows,fields) => {
         if (error) {
 
@@ -89,6 +90,17 @@ const deleteUsuario = (req ,res=response)=>{
 const actualizarUsuario = (req ,res=response)=>{
     const { id } = req.params;
     const { nombre, correo, usuario, clave, rol } = req.body;
+    conexion.query(`SELECT * FROM usuario WHERE correo='${correo}' and idusuario<>'${id}'`,  (error, rows,fields) => {
+       
+        if (error) {
+           return error
+        }
+        if(rows.length>0){
+            return res.status(400).json({
+                ok: false,
+                msg: 'El correo ya esta registrado con otro user'
+            });
+        }
     const passEncrypted= bcrypt.hashSync(clave,10);
     conexion.query(`UPDATE usuario set nombre='${nombre}',correo='${correo}',usuario='${usuario}',clave='${passEncrypted}',rol='${rol}' where idusuario=${id}`, (error, rows,fields) => {
         if (error) {
@@ -99,7 +111,7 @@ const actualizarUsuario = (req ,res=response)=>{
         res.json({ status: 'Usuario actualizado'
             });
     }
-    );
+    );});
 }
 
 module.exports = {

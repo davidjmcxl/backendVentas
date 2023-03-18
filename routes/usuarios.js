@@ -30,4 +30,5 @@ router.put('/:id',[
 ], actualizarUsuario);
 router.delete('/:id',validarJWT, deleteUsuario);
 
+
 module.exports = router;

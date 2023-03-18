@@ -11,8 +11,10 @@ app.set('port', port);
 app.use( cors() );
 app.use(express.json()); 
 //rutas
-app.use('/api/usuarios',require('./routes/usuarios'));
 app.use('/api/auth',require('./routes/auth'));
+app.use('/api/usuarios',require('./routes/usuarios'));
+app.use('/api/clientes',require('./routes/clientes'));
+
 
 //iniciar el servidor
 app.listen(app.get('port'), (error) => {
