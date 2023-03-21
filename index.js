@@ -14,7 +14,8 @@ app.use(express.json());
 app.use('/api/auth',require('./routes/auth'));
 app.use('/api/usuarios',require('./routes/usuarios'));
 app.use('/api/clientes',require('./routes/clientes'));
-
+app.use('/api/productos',require('./routes/productos'));
+app.use('/api/proveedores',require('./routes/proveedores'));
 
 //iniciar el servidor
 app.listen(app.get('port'), (error) => {
