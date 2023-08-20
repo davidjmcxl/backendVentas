@@ -5,13 +5,15 @@ const conexion = require('../config/conexion');
 //obtener todos los usuarios
 
 const getClientes = (req, res=response) => {
-    conexion.query('SELECT * from cliente where estatus=1 order by idcliente', (error, rows,fields) => {
+    conexion.query('SELECT * from cliente where estatus=1 order by idcliente', (error, customers,fields) => {
         if (error) {
 
             console.log('Error al obtener los clientes', error);
             return;
         }
-        res.json(rows);
+        res.json({
+            ok:true,
+            customers});
     });
 }
 
@@ -78,7 +80,7 @@ const deleteCliente = (req ,res=response)=>{
 }
 const actualizarCliente= (req ,res=response)=>{
     const { id } = req.params;
-    const { nombre, nit, telefono, direccion } = req.body;
+    const { nombre, nit, telefono, direccion,usuario_id } = req.body;
     
         conexion.query(`select * from cliente where nit='${nit}'and idcliente<>'${id}'`,(error, rows)=>{
             if(error){
@@ -91,7 +93,7 @@ const actualizarCliente= (req ,res=response)=>{
                     msg: ' ya existe un cliente registrado con esa identificacion'
                 });
             }
-            conexion.query(`UPDATE cliente set nit='${nit}',nombre='${nombre}',telefono='${telefono}',direccion='${direccion}' where idcliente=${id}`, (error, rows,fields) => {
+            conexion.query(`UPDATE cliente set nit='${nit}',nombre='${nombre}',telefono='${telefono}',direccion='${direccion}',usuario_id='${usuario_id}' where idcliente=${id}`, (error, rows,fields) => {
                 if (error) {
                         
                     console.log('Error al actualizar el cliente', error);

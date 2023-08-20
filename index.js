@@ -16,7 +16,9 @@ app.use('/api/usuarios',require('./routes/usuarios'));
 app.use('/api/clientes',require('./routes/clientes'));
 app.use('/api/productos',require('./routes/productos'));
 app.use('/api/proveedores',require('./routes/proveedores'));
-
+app.use('/api/uploads',require('./routes/uploads'));
+app.use('/api/search',require('./routes/search'));
+app.use('/api/ventas',require('./routes/sales'));
 //iniciar el servidor
 app.listen(app.get('port'), (error) => {
     if (error) {

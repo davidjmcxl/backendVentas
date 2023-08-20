@@ -5,7 +5,7 @@ const conexion = require('../config/conexion');
 
 const getProveedores = (req, res=response) => {
     conexion.query('SELECT * from proveedor where estatus=1 order by codproveedor',
-     (error, rows) => {
+     (error, providers) => {
         if (error) {
 
             console.log('Error al obtener los proveedores', error);
@@ -13,7 +13,7 @@ const getProveedores = (req, res=response) => {
         }
         res.status(200).json({
             ok:true,
-            rows});
+            providers});
     });
 }
 

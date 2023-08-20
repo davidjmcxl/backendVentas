@@ -12,29 +12,30 @@ const loginUsuario = async(req, res = response) => {
     const { correo, clave } = req.body;
 
     try {
-        conexion.query(`SELECT * FROM usuario WHERE correo='${correo}'`,  async(error, rows) => {
+        conexion.query(`SELECT * FROM usuario WHERE correo='${correo}'`,  async(error, user) => {
         
-            if (rows.length === 0) {
+            if (user.length === 0) {
                 return res.status(400).json({
                     ok: false,
-                    msg: 'El correo no existe'
+                    msg: 'El correo Ingresado no existe'
                 });
             }
             
-            const validPassword = bcrypt.compareSync( clave, rows[0].clave );
+            const validPassword = bcrypt.compareSync( clave, user[0].clave );
             if ( !validPassword ) {
                 return res.status(400).json({
                     ok: false,
                     msg: 'El password no es válido'
                 });
             }  
-            console.log(rows)
-            if(rows.length>0){
+            console.log(user)
+            if(user.length>0){
                 // Generar el JWT
-              const token = await generarJWT( rows[0].idusuario);
-                return res.status(400).json({
+              const token = await generarJWT( user[0].idusuario);
+
+                return res.status(200).json({
                     ok: true,
-                    rows,token
+                    token
                 });
             }
         });
@@ -65,18 +66,23 @@ const revalidarToken = async(req, res = response ) => {
     
 
           try{
-                conexion.query(`SELECT * FROM usuario WHERE idusuario='${uid}'`,  async(error, rows) => {
+                conexion.query(`SELECT * FROM usuario WHERE idusuario='${uid}'`,  async(error, user) => {
                 
-                    if (rows.length === 0) {
+                    if (user.length === 0) {
                         return res.status(400).json({
                             ok: false,
                             msg: 'El usuario no existe'
                         });
                     }
+                    
                     const token = await generarJWT( uid );
+                    const userWithOutPass = user.map(u => {
+                        const { clave, ...userNew } = u;
+                        return userNew;
+                      });
                     return res.json({
                         ok: true,
-                        rows,
+                        user:userWithOutPass,
                         token
                     });
                 
