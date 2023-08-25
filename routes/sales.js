@@ -14,8 +14,8 @@ const { getSales, addProductToSale, cancelarVenta, getProductsTemp, deleteProduc
 router.get('/',getSales);
 router.get('/productsTemp',getProductsTemp);
 router.post('/addProduct',addProductToSale);
-router.post('/process',procesarVenta);
-router.delete('/deleteProduct',deleteProductToSale);
+router.post('/proccess',procesarVenta);
+router.delete('/deleteProduct/:id',deleteProductToSale);
 router.delete('/anular',cancelarVenta);
 
 

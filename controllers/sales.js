@@ -52,9 +52,10 @@ const deleteProductToSale = (req, res=response) => {
     
     const token = req.header('x-token');
   
-    const { id_detalle} = req.body;
+    const { id } = req.params;
+    console.log(id);
 
-    conexion.query(`CALL del_detalle_temp(${id_detalle},'${token}')`,(error,resp)=>{
+    conexion.query(`CALL del_detalle_temp(${id},'${token}')`,(error,resp)=>{
         if (error) {
             return res.json({
                 ok:false,

@@ -19,6 +19,7 @@ app.use('/api/proveedores',require('./routes/proveedores'));
 app.use('/api/uploads',require('./routes/uploads'));
 app.use('/api/search',require('./routes/search'));
 app.use('/api/ventas',require('./routes/sales'));
+app.use('/api/dashboard',require('./routes/dashboard'));
 //iniciar el servidor
 app.listen(app.get('port'), (error) => {
     if (error) {
