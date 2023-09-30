@@ -21,10 +21,9 @@ const getProveedores = (req, res=response) => {
 
 const getProveedorById = (req, res=response) => {
     const { id } = req.params;
-
-    conexion.query(`SELECT * from proveedor where codproveedor=${id}`, (error, rows) => {
+    const query='SELECT * from proveedor where codproveedor=?';
+    conexion.query(query,[id] ,(error, rows) => {
         if (error) {
-
             console.log('Error al obtener los Proveedores', error);
             return;
         }
@@ -35,8 +34,9 @@ const getProveedorById = (req, res=response) => {
 const crearProveedor= (req, res=response) => {
     const { proveedor, contacto, telefono, direccion, usuario_id } = req.body;
 
-
-           conexion.query(`INSERT INTO proveedor(proveedor,contacto,telefono,direccion,usuario_id) values('${proveedor}','${contacto}','${telefono}','${direccion}','${usuario_id}')`, async(error) => {
+            const query='INSERT INTO proveedor(proveedor,contacto,telefono,direccion,usuario_id) values(?,?,?,?,?)';
+            const params=[proveedor,contacto,telefono,direccion,usuario_id];
+            conexion.query(query,params ,async(error) => {
                 if (error) {
                     
                     console.log('Error al agregar el Proveedor', error);
@@ -51,7 +51,8 @@ const crearProveedor= (req, res=response) => {
 const deleteProveedor = (req ,res=response)=>{
 
     const { id } = req.params;
-    conexion.query(`UPDATE proveedor set  estatus='0' where codproveedor=${id}`, (error) => {
+    const query ="UPDATE proveedor set  estatus='0' where codproveedor=?";
+    conexion.query(query,[id],(error) => {
         if (error) {
 
             console.log('Error al eliminar el Proveedor', error);
@@ -67,8 +68,9 @@ const actualizarProveedor= (req ,res=response)=>{
     const { id } = req.params;
     const { proveedor, contacto, telefono, direccion, usuario_id } = req.body;
     
-      
-            conexion.query(`UPDATE proveedor set proveedor='${proveedor}',contacto='${contacto}',telefono='${telefono}',direccion='${direccion}',usuario_id='${usuario_id}' where codproveedor=${id}`,
+            const queryUpdate='UPDATE proveedor set proveedor=?,contacto=?,telefono=?,direccion=?,usuario_id=? where codproveedor=?';
+            const params=[proveedor,contacto,telefono,direccion,usuario_id,id];
+            conexion.query(queryUpdate,params,
                  (error) => {
                 if (error) {
                         
