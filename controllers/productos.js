@@ -1,5 +1,5 @@
 const { response } = require("express");
-const conexion = require('../config/conexion');
+const conexion = require('../configDB/conexion');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const path = require('path');

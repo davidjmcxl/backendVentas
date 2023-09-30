@@ -1,5 +1,5 @@
 const { response } = require("express");
-const conexion = require('../config/conexion');
+const conexion = require('../configDB/conexion');
 
 
 //obtener todos los usuarios
